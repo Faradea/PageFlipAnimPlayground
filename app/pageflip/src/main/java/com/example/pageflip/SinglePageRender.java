@@ -2,12 +2,11 @@ package com.example.pageflip;
 
 import android.content.Context;
 import android.graphics.Bitmap;
-import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
 import android.os.Handler;
 import android.os.Message;
-import android.widget.Toast;
+
 
 import com.eschao.android.widget.pageflip.Page;
 import com.eschao.android.widget.pageflip.PageFlip;
@@ -149,8 +148,6 @@ public class SinglePageRender extends PageRender {
 
     /**
      * Draw page content
-     *
-     * @param number page number
      */
     private void drawPage() {
         final int width = mCanvas.getWidth();
@@ -164,16 +161,6 @@ public class SinglePageRender extends PageRender {
         mCanvas.drawBitmap(background, null, rect, p);
         background.recycle();
         background = null;
-
-        // 2. draw page number
-        int fontSize = calcFontSize(80);
-        p.setColor(Color.WHITE);
-        p.setStrokeWidth(1);
-        p.setAntiAlias(true);
-        p.setShadowLayer(5.0f, 8.0f, 8.0f, Color.BLACK);
-        p.setTextSize(fontSize);
-
-        float y = height - p.getTextSize() - 20;
     }
 
     /**

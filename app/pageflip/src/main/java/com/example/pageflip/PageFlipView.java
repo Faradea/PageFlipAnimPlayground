@@ -1,12 +1,9 @@
 package com.example.pageflip;
 
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.opengl.GLSurfaceView;
 import android.os.Handler;
 import android.os.Message;
-import android.preference.PreferenceManager;
-import android.provider.SyncStateContract;
 import android.util.AttributeSet;
 import android.util.Log;
 
@@ -161,26 +158,6 @@ public class PageFlipView extends GLSurfaceView implements GLSurfaceView.Rendere
     public void onSurfaceChanged(GL10 gl, int width, int height) {
         try {
             mPageFlip.onSurfaceChanged(width, height);
-
-            // if there is the second page, create double page render when need
-            int pageNo = mPageRender.getPageNo();
-            if (mPageFlip.getSecondPage() != null && width > height) {
-                if (!(mPageRender instanceof DoublePagesRender)) {
-                    mPageRender.release();
-                    mPageRender = new DoublePagesRender(getContext(),
-                            mPageFlip,
-                            mHandler,
-                            pageNo);
-                }
-            }
-            // if there is only one page, create single page render when need
-            else if(!(mPageRender instanceof SinglePageRender)) {
-                mPageRender.release();
-                mPageRender = new SinglePageRender(getContext(),
-                        mPageFlip,
-                        mHandler,
-                        pageNo);
-            }
 
             // let page render handle surface change
             mPageRender.onSurfaceChanged(width, height);

@@ -46,15 +46,6 @@ public abstract class PageRender implements OnPageFlipListener {
     }
 
     /**
-     * Get page number
-     *
-     * @return page number
-     */
-    public int getPageNo() {
-        return mPageNo;
-    }
-
-    /**
      * Release resources
      */
     public void release() {
@@ -94,14 +85,6 @@ public abstract class PageRender implements OnPageFlipListener {
         }
 
         return false;
-    }
-
-    /**
-     * Calculate font size by given SP unit
-     */
-    protected int calcFontSize(int size) {
-        return (int)(size * mContext.getResources().getDisplayMetrics()
-                .scaledDensity);
     }
 
     /**

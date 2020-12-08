@@ -23,7 +23,6 @@ public final class LoadBitmapTask implements Runnable {
     private static LoadBitmapTask __object;
 
     final static int SMALL_BG = 0;
-    final static int MEDIUM_BG = 1;
     final static int LARGE_BG = 2;
     final static int BG_COUNT = 10;
 
@@ -166,14 +165,6 @@ public final class LoadBitmapTask implements Runnable {
      */
     public void set(int w, int h, int maxCached) {
         int newIndex = LARGE_BG;
-        if ((w <= 480 && h <= 854) ||
-                (w <= 854 && h <= 480)) {
-            newIndex = SMALL_BG;
-        }
-        else if ((w <= 800 && h <= 1280) ||
-                (h <= 800 && w <= 1280)) {
-            newIndex = MEDIUM_BG;
-        }
 
         mIsLandscape = w > h;
 
