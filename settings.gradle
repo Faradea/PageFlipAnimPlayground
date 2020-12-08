@@ -1,0 +1,5 @@
+include ':app:pageflip'
+include ':app:yogeshpaliyal'
+include ':app:numandroid'
+include ':app'
+rootProject.name = "PageFlipAnimPlayground"

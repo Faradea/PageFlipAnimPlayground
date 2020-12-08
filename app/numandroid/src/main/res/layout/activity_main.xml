@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<app.num.numandroidpagecurleffect.PageCurlView
+    android:layout_width="match_parent"
+    android:layout_height="fill_parent"
+    android:id="@+id/pagecurl_view"
+    android:background="@drawable/obama"
+    xmlns:android="http://schemas.android.com/apk/res/android" />
