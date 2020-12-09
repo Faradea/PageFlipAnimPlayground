@@ -38,7 +38,7 @@ class PageFlipView : GLSurfaceView, GLSurfaceView.Renderer {
 
         // create PageFlip
         mPageFlip = PageFlip(context)
-        mPageFlip!!.setSemiPerimeterRatio(0.8f)
+        mPageFlip.setSemiPerimeterRatio(0.8f)
             .setShadowWidthOfFoldEdges(5f, 60f, 0.3f)
             .setShadowWidthOfFoldBase(5f, 80f, 0.4f)
             .setPixelsOfMesh(pixelsOfMesh)
@@ -66,10 +66,10 @@ class PageFlipView : GLSurfaceView, GLSurfaceView.Renderer {
     fun onFingerDown(x: Float, y: Float) {
         // if the animation is going, we should ignore this event to avoid
         // mess drawing on screen
-        if (!mPageFlip!!.isAnimating &&
-            mPageFlip!!.firstPage != null
+        if (!mPageFlip.isAnimating &&
+            mPageFlip.firstPage != null
         ) {
-            mPageFlip!!.onFingerDown(x, y)
+            mPageFlip.onFingerDown(x, y)
         }
     }
 
@@ -80,21 +80,19 @@ class PageFlipView : GLSurfaceView, GLSurfaceView.Renderer {
      * @param y finger y coordinate
      */
     fun onFingerMove(x: Float, y: Float) {
-        if (mPageFlip!!.isAnimating) {
+        if (mPageFlip.isAnimating) {
             // nothing to do during animating
-        } else if (mPageFlip!!.canAnimate(x, y)) {
+        } else if (mPageFlip.canAnimate(x, y)) {
             // if the point is out of current page, try to start animating
             onFingerUp(x, y)
-        } else if (mPageFlip!!.onFingerMove(x, y)) {
+        } else if (mPageFlip.onFingerMove(x, y)) {
             try {
-                mDrawLock!!.lock()
-                if (mPageRender != null &&
-                    mPageRender!!.onFingerMove(x, y)
-                ) {
+                mDrawLock.lock()
+                if (mPageRender.onFingerMove(x, y)) {
                     requestRender()
                 }
             } finally {
-                mDrawLock!!.unlock()
+                mDrawLock.unlock()
             }
         }
     }
@@ -106,17 +104,15 @@ class PageFlipView : GLSurfaceView, GLSurfaceView.Renderer {
      * @param y finger y coordinate
      */
     fun onFingerUp(x: Float, y: Float) {
-        if (!mPageFlip!!.isAnimating) {
-            mPageFlip!!.onFingerUp(x, y, mDuration)
+        if (!mPageFlip.isAnimating) {
+            mPageFlip.onFingerUp(x, y, mDuration)
             try {
-                mDrawLock!!.lock()
-                if (mPageRender != null &&
-                    mPageRender!!.onFingerUp(x, y)
-                ) {
+                mDrawLock.lock()
+                if (mPageRender.onFingerUp(x, y)) {
                     requestRender()
                 }
             } finally {
-                mDrawLock!!.unlock()
+                mDrawLock.unlock()
             }
         }
     }
@@ -128,12 +124,10 @@ class PageFlipView : GLSurfaceView, GLSurfaceView.Renderer {
      */
     override fun onDrawFrame(gl: GL10) {
         try {
-            mDrawLock!!.lock()
-            if (mPageRender != null) {
-                mPageRender!!.onDrawFrame()
-            }
+            mDrawLock.lock()
+            mPageRender.onDrawFrame()
         } finally {
-            mDrawLock!!.unlock()
+            mDrawLock.unlock()
         }
     }
 
@@ -146,10 +140,10 @@ class PageFlipView : GLSurfaceView, GLSurfaceView.Renderer {
      */
     override fun onSurfaceChanged(gl: GL10, width: Int, height: Int) {
         try {
-            mPageFlip!!.onSurfaceChanged(width, height)
+            mPageFlip.onSurfaceChanged(width, height)
 
             // let page render handle surface change
-            mPageRender!!.onSurfaceChanged(width, height)
+            mPageRender.onSurfaceChanged(width, height)
         } catch (e: PageFlipException) {
             Log.e(TAG, "Failed to run PageFlipFlipRender:onSurfaceChanged")
         }
@@ -163,7 +157,7 @@ class PageFlipView : GLSurfaceView, GLSurfaceView.Renderer {
      */
     override fun onSurfaceCreated(gl: GL10, config: EGLConfig) {
         try {
-            mPageFlip!!.onSurfaceCreated()
+            mPageFlip.onSurfaceCreated()
         } catch (e: PageFlipException) {
             Log.e(TAG, "Failed to run PageFlipFlipRender:onSurfaceCreated")
         }

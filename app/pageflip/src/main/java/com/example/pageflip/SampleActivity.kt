@@ -31,14 +31,12 @@ class SampleActivity : Activity(), GestureDetector.OnGestureListener {
 
     override fun onResume() {
         super.onResume()
-        LoadBitmapTask.get(this).start()
         mPageFlipView?.onResume()
     }
 
     override fun onPause() {
         super.onPause()
         mPageFlipView?.onPause()
-        LoadBitmapTask.get(this).stop()
     }
 
     override fun onTouchEvent(event: MotionEvent): Boolean {

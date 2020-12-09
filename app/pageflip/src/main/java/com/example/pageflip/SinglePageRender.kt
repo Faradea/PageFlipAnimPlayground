@@ -34,7 +34,7 @@ class SinglePageRender(
     /**
      * Draw frame
      */
-    public override fun onDrawFrame() {
+    override fun onDrawFrame() {
         // 1. delete unused textures
         mPageFlip.deleteUnusedTextures()
         val page = mPageFlip.firstPage
@@ -82,7 +82,7 @@ class SinglePageRender(
      * @param width surface width
      * @param height surface height
      */
-    public override fun onSurfaceChanged(width: Int, height: Int) {
+    override fun onSurfaceChanged(width: Int, height: Int) {
         // recycle bitmap resources if need
         mBackgroundBitmap?.recycle()
         mBitmap?.recycle()
@@ -94,8 +94,7 @@ class SinglePageRender(
             page.width().toInt(), page.height().toInt(),
             Bitmap.Config.ARGB_8888
         )
-        mCanvas?.setBitmap(mBitmap)
-        LoadBitmapTask.get(mContext)[width, height] = 1
+        mCanvas.setBitmap(mBitmap)
     }
 
     /**
@@ -107,7 +106,7 @@ class SinglePageRender(
      * @param what event type
      * @return ture if need render again
      */
-    public override fun onEndedDrawing(what: Int): Boolean {
+    override fun onEndedDrawing(what: Int): Boolean {
 
         if (what == DRAW_ANIMATING_FRAME) {
             val isAnimating = mPageFlip.animating()
@@ -143,11 +142,10 @@ class SinglePageRender(
         p.isFilterBitmap = true
 
         // 1. draw background bitmap
-        var background = LoadBitmapTask.get(mContext).bitmap
+        val background = LoadBitmapTask[mContext]?.bitmap
         val rect = Rect(0, 0, width, height)
         mCanvas.drawBitmap(background!!, null, rect, p)
         background.recycle()
-        background = null
     }
 
     /**
