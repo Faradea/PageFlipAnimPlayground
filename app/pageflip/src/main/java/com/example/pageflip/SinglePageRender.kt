@@ -27,9 +27,10 @@ import com.eschao.android.widget.pageflip.PageFlipState
  */
 class SinglePageRender(
     context: Context, pageFlip: PageFlip,
-    handler: Handler, pageNo: Int
+    handler: Handler, pageNo: Int,
+    private val renderEndAction: () -> Unit
 ) :
-    PageRender(context, pageFlip, handler, pageNo) {
+    PageRender(context, pageFlip, handler, pageNo, renderEndAction) {
     /**
      * Draw frame
      */
@@ -107,6 +108,7 @@ class SinglePageRender(
      * @return ture if need render again
      */
     public override fun onEndedDrawing(what: Int): Boolean {
+
         if (what == DRAW_ANIMATING_FRAME) {
             val isAnimating = mPageFlip.animating()
             // continue animating
@@ -121,6 +123,7 @@ class SinglePageRender(
                     // represents the FIRST_TEXTURE no;
                 } else if (state == PageFlipState.END_WITH_FORWARD) {
                     mPageFlip.firstPage.setFirstTextureWithSecond()
+                    renderEndAction.invoke()
                     mPageNo++
                 }
                 mDrawCommand = DRAW_FULL_PAGE

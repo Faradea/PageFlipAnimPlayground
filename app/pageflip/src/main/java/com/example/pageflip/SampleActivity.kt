@@ -7,8 +7,6 @@ import android.view.GestureDetector
 import android.view.MotionEvent
 import android.view.View
 import android.widget.ImageView
-import android.widget.Toast
-import androidx.constraintlayout.widget.ConstraintLayout
 
 
 class SampleActivity : Activity(), GestureDetector.OnGestureListener {
@@ -22,13 +20,13 @@ class SampleActivity : Activity(), GestureDetector.OnGestureListener {
         setContentView(R.layout.activity_main)
         val imageView = findViewById<ImageView>(R.id.imageView)
         mPageFlipView = findViewById(R.id.flipView)
-        mPageFlipView?.visibility = View.INVISIBLE
+        mPageFlipView?.alpha = 0.0f
         mGestureDetector = GestureDetector(this, this)
-//        findViewById<ConstraintLayout>(R.id.cl).systemUiVisibility = View.SYSTEM_UI_FLAG_FULLSCREEN or
-//                View.SYSTEM_UI_FLAG_LAYOUT_STABLE or
-//                View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION or
-//                View.SYSTEM_UI_FLAG_IMMERSIVE or
-//                View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+        this.window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_FULLSCREEN or
+                View.SYSTEM_UI_FLAG_LAYOUT_STABLE or
+                View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION or
+                View.SYSTEM_UI_FLAG_IMMERSIVE or
+                View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
     }
 
     override fun onResume() {
@@ -55,6 +53,7 @@ class SampleActivity : Activity(), GestureDetector.OnGestureListener {
 
     override fun onDown(e: MotionEvent): Boolean {
         Log.d("TouchEvent", "onFingerDown")
+        mPageFlipView?.alpha = 1f
         mPageFlipView?.onFingerDown(e.x, e.y)
         return true
     }

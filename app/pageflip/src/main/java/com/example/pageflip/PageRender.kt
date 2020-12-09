@@ -15,7 +15,7 @@ import com.eschao.android.widget.pageflip.PageFlip
  */
 abstract class PageRender(
     var mContext: Context, var mPageFlip: PageFlip,
-    handler: Handler, var mPageNo: Int
+    handler: Handler, var mPageNo: Int, renderEndAction: () -> Unit
 ) :
     OnPageFlipListener {
     var mDrawCommand: Int
