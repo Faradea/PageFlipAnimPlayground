@@ -6,6 +6,7 @@ import android.os.Handler
 import android.os.Message
 import android.util.AttributeSet
 import android.util.Log
+import android.view.View
 import com.eschao.android.widget.pageflip.PageFlip
 import com.eschao.android.widget.pageflip.PageFlipException
 import java.util.concurrent.locks.ReentrantLock
@@ -64,6 +65,7 @@ class PageFlipView : GLSurfaceView, GLSurfaceView.Renderer {
      * @param y finger y coordinate
      */
     fun onFingerDown(x: Float, y: Float) {
+        visibility = View.VISIBLE
         // if the animation is going, we should ignore this event to avoid
         // mess drawing on screen
         if (!mPageFlip!!.isAnimating &&
@@ -106,6 +108,7 @@ class PageFlipView : GLSurfaceView, GLSurfaceView.Renderer {
      * @param y finger y coordinate
      */
     fun onFingerUp(x: Float, y: Float) {
+        visibility = View.INVISIBLE
         if (!mPageFlip!!.isAnimating) {
             mPageFlip!!.onFingerUp(x, y, mDuration)
             try {
