@@ -1,3 +1,4 @@
+include ':pagefliporigin'
 include ':app:pageflip'
 include ':app:yogeshpaliyal'
 include ':app:numandroid'
